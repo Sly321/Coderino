@@ -1,3 +1,22 @@
+html, body, #editor, .left-sidebar, .right-sidebar {
+  height: 100%;
+}
+
+.left-sidebar {
+  float: left;
+  width: 15%;
+}
+
+.right-sidebar {
+  float: right;
+  width: 15%;
+}
+
+#editor {
+  margin: 0;
+}
+
+/*
 * {
   box-sizing: border-box; }
 
