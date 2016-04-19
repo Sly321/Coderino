@@ -48,6 +48,7 @@ var scanDoc = function() {
 	allScans = allScans.concat(scanForFunctions(text));
 	allScans = allScans.concat(scanForFunctionSek(text));
 	allScans = allScans.concat(scanForClassPrototypeFunction(text));
+	allScans = allScans.concat(scanForTheLolz(text));
 
 	allScans.sort(function(a, b) {
 		return a["row"] > b["row"];
@@ -58,43 +59,80 @@ var scanDoc = function() {
 	console.log(allScans);
 }
 
+var scanForTheLolz = function(editorText) {
+	var regexFunction = /asdasfasdasd\s?=\s?function/g;
+	var arrayFunctions = editorText.match(regexFunction);
+	if(arrayFunctions != null) {
+		var arrayFunctionNames = [];
+		for (var x = 0; x < arrayFunctions.length; x++) {
+			var match = null;
+			match = /asdasfasdasd\s?=\s?function/g.exec(arrayFunctions[x])
+			var row = editorText.slice(1, editorText.search(arrayFunctions[x])).split("\n").length
+			arrayFunctionNames.push({ name: match[1] + "." + match[3], row: row, type: 'class-prototype' });
+		}
+		return arrayFunctionNames;
+	}
+	else
+	{
+		return [];
+	}
+}
+
 var scanForClassPrototypeFunction = function(editorText) {
 	var regexFunction = /([\w]*)\.([\w]*)\.([\w]*)\s?=\s?function/g;
 	var arrayFunctions = editorText.match(regexFunction);
-	var arrayFunctionNames = [];
-	for (var x = 0; x < arrayFunctions.length; x++) {
-		var match = null;
-		match = /([\w]*)\.([\w]*)\.([\w]*)\s?=\s?function/g.exec(arrayFunctions[x])
-		var row = editorText.slice(1, editorText.search(arrayFunctions[x])).split("\n").length
-		arrayFunctionNames.push({ name: match[1] + "." + match[3], row: row, type: 'class-prototype' });
+	if(arrayFunctions != null) {
+		var arrayFunctionNames = [];
+		for (var x = 0; x < arrayFunctions.length; x++) {
+			var match = null;
+			match = /([\w]*)\.([\w]*)\.([\w]*)\s?=\s?function/g.exec(arrayFunctions[x])
+			var row = editorText.slice(1, editorText.search(arrayFunctions[x])).split("\n").length
+			arrayFunctionNames.push({ name: match[1] + "." + match[3], row: row, type: 'class-prototype' });
+		}
+		return arrayFunctionNames;
 	}
-	return arrayFunctionNames;
+	else
+	{
+		return [];
+	}
 }
 
 var scanForFunctionSek = function(editorText) {
 	var regexFunction = /var\s([\w]*)\s?=\s?function/g;
 	var arrayFunctions = editorText.match(regexFunction);
-	var arrayFunctionNames = [];
-	for (var x = 0; x < arrayFunctions.length; x++) {
-		var match = null;
-		match = /var\s([\w]*)\s?=\s?function/g.exec(arrayFunctions[x])
-		var row = editorText.slice(1, editorText.search(arrayFunctions[x])).split("\n").length
-		arrayFunctionNames.push({ name: match[1], row: row, type: 'function' });
+	if(arrayFunctions != null) {
+		var arrayFunctionNames = [];
+		for (var x = 0; x < arrayFunctions.length; x++) {
+			var match = null;
+			match = /var\s([\w]*)\s?=\s?function/g.exec(arrayFunctions[x])
+			var row = editorText.slice(1, editorText.search(arrayFunctions[x])).split("\n").length
+			arrayFunctionNames.push({ name: match[1], row: row, type: 'function' });
+		}
+		return arrayFunctionNames;
 	}
-	return arrayFunctionNames;
+	else
+	{
+		return [];
+	}
 }
 
 var scanForFunctions = function(editorText) {
-	var regexFunction = /(function)\s([\w]*)/g;
+	var regexFunction = /(function)\s([\w]+)/g;
 	var arrayFunctions = editorText.match(regexFunction);
-	var arrayFunctionNames = [];
-	for (var x = 0; x < arrayFunctions.length; x++) {
-		var match = null;
-		match = /(function)\s([\w]*)/g.exec(arrayFunctions[x])
-		var row = editorText.slice(1, editorText.search(arrayFunctions[x])).split("\n").length
-		arrayFunctionNames.push({ name: match[2], row: row, type: 'function' });
+	if(arrayFunctions != null) {
+		var arrayFunctionNames = [];
+		for (var x = 0; x < arrayFunctions.length; x++) {
+			var match = null;
+			match = /(function)\s([\w]*)/g.exec(arrayFunctions[x])
+			var row = editorText.slice(1, editorText.search(arrayFunctions[x])).split("\n").length
+			arrayFunctionNames.push({ name: match[2], row: row, type: 'function' });
+		}
+		return arrayFunctionNames;
 	}
-	return arrayFunctionNames;
+	else
+	{
+		return [];
+	}
 }
 
 var buildButtonTree = function(elements) 
