@@ -1,52 +1,113 @@
+if(Array.prototype.equals)
+    console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
+// attach the .equals method to Array's prototype to call it on any array
+Array.prototype.equals = function (array) {
+    // if the other array is a falsy value, return
+    if (!array)
+        return false;
+
+    // compare lengths - can save a lot of time 
+    if (this.length != array.length)
+        return false;
+
+    for (var i = 0, l=this.length; i < l; i++) {
+        // Check if we have nested arrays
+        if (this[i]["name"] == array[i]["name"] && this[i]["row"] == array[i]["row"] && this[i]["type"] == array[i]["type"]) {
+        }           
+        else {
+        	console.log("nope");
+        	return false;
+        }           
+    }       
+    console.log("no changes");      
+    return true;
+}
+// Hide method from for-in loops
+Object.defineProperty(Array.prototype, "equals", {enumerable: false});
+
 var editor = ace.edit("editor");
 editor.setTheme("ace/theme/monokai");
 editor.getSession().setMode("ace/mode/javascript");
 editor.$blockScrolling = Infinity;
+var oldScans = [];
 
 editor.setOptions({
   fontSize: "10pt"
 });
 
 editor.on("change", function() {
-	console.log("change");
-	//scanDoc(/(function)\s[\w]*/g, "function");
+	scanDoc();
 });
 
-var scanDoc = function(regex, name) {
-    var treeviewElement = document.getElementById("tree_view_content");
-	clearElement(treeviewElement);
+var scanDoc = function() {
 
-	text = editor.getValue()
+	text = editor.getValue();
 
-	var myString = "function test_abc() {}";
-	var myRegexp = /(function)\s([\w]*)/g;
-	var match = myRegexp.exec(myString);
-	alert(match[1]);  // function
-	alert(match[2]); // test_abc
-	
-	var amount = editor.findAll(regex, {
-		caseSensitive: false,
-		regExp: true
+	var allScans = [];
+
+	allScans = allScans.concat(scanForFunctions(text));
+	allScans = allScans.concat(scanForFunctionSek(text));
+	allScans = allScans.concat(scanForClassPrototypeFunction(text));
+
+	allScans.sort(function(a, b) {
+		return a["row"] > b["row"];
 	});
 
-	if(amount != 0)
-	{
-		editor.findPrevious()
-		for(var x = 0; x < amount; x++)
-		{
-		  editor.find(regex, {
-		  	caseSensitive: false,
-		  	regExp: true
-		  });
-		  var row = editor.selection.getCursor().row;
-		  var tt = editor.session.getLine(row);
-		  addLink(name, row, treeviewElement);
-		}
+	buildButtonTree(allScans);
+
+	console.log(allScans);
+}
+
+var scanForClassPrototypeFunction = function(editorText) {
+	var regexFunction = /([\w]*)\.([\w]*)\.([\w]*)\s?=\s?function/g;
+	var arrayFunctions = editorText.match(regexFunction);
+	var arrayFunctionNames = [];
+	for (var x = 0; x < arrayFunctions.length; x++) {
+		var match = null;
+		match = /([\w]*)\.([\w]*)\.([\w]*)\s?=\s?function/g.exec(arrayFunctions[x])
+		var row = editorText.slice(1, editorText.search(arrayFunctions[x])).split("\n").length
+		arrayFunctionNames.push({ name: match[1] + "." + match[3], row: row, type: 'class-prototype' });
 	}
-	else
-	{
+	return arrayFunctionNames;
+}
+
+var scanForFunctionSek = function(editorText) {
+	var regexFunction = /var\s([\w]*)\s?=\s?function/g;
+	var arrayFunctions = editorText.match(regexFunction);
+	var arrayFunctionNames = [];
+	for (var x = 0; x < arrayFunctions.length; x++) {
+		var match = null;
+		match = /var\s([\w]*)\s?=\s?function/g.exec(arrayFunctions[x])
+		var row = editorText.slice(1, editorText.search(arrayFunctions[x])).split("\n").length
+		arrayFunctionNames.push({ name: match[1], row: row, type: 'function' });
+	}
+	return arrayFunctionNames;
+}
+
+var scanForFunctions = function(editorText) {
+	var regexFunction = /(function)\s([\w]*)/g;
+	var arrayFunctions = editorText.match(regexFunction);
+	var arrayFunctionNames = [];
+	for (var x = 0; x < arrayFunctions.length; x++) {
+		var match = null;
+		match = /(function)\s([\w]*)/g.exec(arrayFunctions[x])
+		var row = editorText.slice(1, editorText.search(arrayFunctions[x])).split("\n").length
+		arrayFunctionNames.push({ name: match[2], row: row, type: 'function' });
+	}
+	return arrayFunctionNames;
+}
+
+var buildButtonTree = function(elements) 
+{
+	if(!(oldScans.equals(elements))) {
+		oldScans = elements;
 		var treeviewElement = document.getElementById("tree_view_content");
-		treeviewElement.innerHTML = "No results!";
+		clearElement(treeviewElement);
+
+		for(var x = 0; x < elements.length; x++)
+		{
+			addLink(elements[x]["name"], elements[x]["row"], elements[x]["type"], treeviewElement);
+		}
 	}
 }
 
@@ -55,9 +116,9 @@ var clearElement = function(element)
 	element.innerHTML = "";
 }
 
-var addLink = function(title, row, element) 
+var addLink = function(title, row, type, element) 
 {
-	element.innerHTML += "<button title='" + title + "' class='std-btn glow-red' onclick='selectLine(" + row + ")'>" + title + ": " + (parseInt(row)+1) + "</button>";
+	element.innerHTML += "<a title='" + title + "' class='" + type + "-btn' onclick='selectLine(" + (row-1) + ")'>" + title + ": " + (parseInt(row)) + "</a>";
 }
 
 var selectLine = function(line) {
@@ -69,3 +130,13 @@ var selectLine = function(line) {
 }
 
 scanDoc(/(function)\s([\w]*)/g, "function");
+
+
+
+
+
+
+
+// LIB
+// 
+// Warn if overriding existing method

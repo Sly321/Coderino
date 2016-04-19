@@ -16,6 +16,25 @@ html, body, #editor, .left-sidebar, .right-sidebar {
   margin: 0;
 }
 
+#tree_view_content > a {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: lightgray;
+  margin: 0 3px 3px 3px;
+  padding: 2px;
+}
+
+.function-btn {
+  color: #F66D21;
+}
+
+.class-prototype-btn {
+  color: #8370F8;
+}
+
 /*
 * {
   box-sizing: border-box; }
