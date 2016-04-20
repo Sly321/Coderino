@@ -71,7 +71,7 @@ var scanDoc = function() {
 	allScans = allScans.concat(scanForTheLolz(text));
 
 	allScans.sort(function(a, b) {
-		return a["row"] > b["row"];
+		return a["row"] - b["row"];
 	});
 
 	buildButtonTree(allScans);
@@ -135,14 +135,14 @@ var scanForFunctionSek = function(editorText) {
 }
 
 var scanForFunctions = function(editorText) {
-	var regexFunction = /(function)\s([\w]+)/g;
+	var regexFunction = /(function)\s([\w]+)\s?\(.*\)/g;
 	var arrayFunctions = editorText.match(regexFunction);
 	if(arrayFunctions != null) {
 		var arrayFunctionNames = [];
 		for (var x = 0; x < arrayFunctions.length; x++) {
 			var match = null;
-			match = /(function)\s([\w]*)/g.exec(arrayFunctions[x])
-			var row = editorText.slice(1, editorText.search(arrayFunctions[x])).split("\n").length
+			match = /(function)\s([\w]+)\s?\(.*\)/g.exec(arrayFunctions[x])
+			var row = editorText.slice(1, editorText.indexOf(arrayFunctions[x])).split("\n").length
 			arrayFunctionNames.push({ name: match[2], row: row, type: 'function' });
 		}
 		return arrayFunctionNames;
@@ -186,6 +186,9 @@ var selectLine = function(line) {
 }
 
 scanDoc(/(function)\s([\w]*)/g, "function");
+
+editor_map.setValue(editor.getValue());
+editor_map.selection.clearSelection();
 
 
 
