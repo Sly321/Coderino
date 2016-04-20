@@ -66,7 +66,6 @@ editor.on("change", function() {
 
 editor.getSession().on('changeScrollTop', function(scroll) {
 	percentage = (scroll * 100) / MAXSCROLLTOP;
-	console.log(percentage);
 
   var OVERLAYTOP = ((EDITORHEIGHT - OVERLAYSIZE) * percentage) / 100;
   editor_map.session.setScrollTop((scroll / (10/2)) - OVERLAYTOP);
@@ -77,6 +76,11 @@ editor.getSession().on('changeScrollTop', function(scroll) {
   	$("#scroll_overlay").css("top", "0px")
   }
 });
+
+// editor_map.on("cursor_change", function() {
+// 		do magic stuff with the other editor
+// 
+// });
 
 var scanDoc = function() {
 
