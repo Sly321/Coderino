@@ -54,6 +54,10 @@ html, body, #editor, #editor_map, .left-sidebar, .right-sidebar {
   display: none;
 }
 
+#editor_map .ace_scroller {
+  cursor: move;
+}
+
 #tree_view_content > a {
   display: block;
   text-align: center;
