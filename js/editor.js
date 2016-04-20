@@ -52,14 +52,30 @@ editor_map.setOptions({
 
 var oldScans = [];
 
+var MAXSCROLLTOP = editor.session.getScreenLength() * 15;
+var OVERLAYSIZE = $("#editor").height() / 5.078947368421052;
+var OVERLAYTOP = 0;
+var EDITORHEIGHT = $("#editor").height();
+
 editor.on("change", function() {
 	scanDoc();
 	editor_map.setValue(editor.getValue());
 	editor_map.selection.clearSelection();
+  MAXSCROLLTOP = editor.session.getScreenLength() * 15;
 });
 
 editor.getSession().on('changeScrollTop', function(scroll) {
-  editor_map.session.setScrollTop(scroll / (10/2))
+	percentage = (scroll * 100) / MAXSCROLLTOP;
+	console.log(percentage);
+
+  var OVERLAYTOP = ((EDITORHEIGHT-190) * percentage) / 100;
+  editor_map.session.setScrollTop((scroll / (10/2)) - OVERLAYTOP);
+
+  if(OVERLAYTOP > 0) {
+  	$("#scroll_overlay").css("top", OVERLAYTOP + "px")
+  } else {
+  	$("#scroll_overlay").css("top", "0px")
+  }
 });
 
 var scanDoc = function() {
@@ -192,9 +208,12 @@ scanDoc(/(function)\s([\w]*)/g, "function");
 
 editor_map.setValue(editor.getValue());
 editor_map.selection.clearSelection();
+$('#scroll_overlay').height(OVERLAYSIZE);
 
 $( window ).resize(function() {
-  $('#scroll_overlay').height($("#editor").height() / 4.825);
+	EDITORHEIGHT = $("#editor").height();
+	OVERLAYSIZE = EDITORHEIGHT / 5.078947368421052;
+  $('#scroll_overlay').height(OVERLAYSIZE);
 });
 
 
