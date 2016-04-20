@@ -46,6 +46,10 @@ html, body, #editor, #editor_map, .left-sidebar, .right-sidebar {
   font-size: 12pt;
 }
 
+#editor .ace_scrollbar-h {
+  height: 6px !important;
+}
+
 #editor_map .ace_scrollbar-h {
   display: none;
 }
