@@ -25,6 +25,7 @@ html, body, #editor, #editor_map, .left-sidebar, .right-sidebar {
   min-width: 200px;
   overflow: auto;
   height: 100%;
+  background-color: #49483E;
 }
 
 .right-sidebar {
@@ -60,13 +61,14 @@ html, body, #editor, #editor_map, .left-sidebar, .right-sidebar {
 
 #tree_view_content > a {
   display: block;
-  text-align: center;
+  text-align: left;
   font-size: 12px;
   cursor: pointer;
   border-radius: 4px;
-  background-color: lightgray;
+  background-color: #272822;;
   margin: 3px 3px 0px 3px;
   padding: 2px;
+  font-family: consolas;
 }
 
 .function-btn {
