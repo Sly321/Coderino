@@ -28,7 +28,7 @@ html, body, #editor, #editor_map, .left-sidebar, .right-sidebar {
 .right-sidebar {
   float: right;
   width: 15%;
-  min-width: 200px;
+  max-width: 150px;
 }
 
 #editor, #editor_map {

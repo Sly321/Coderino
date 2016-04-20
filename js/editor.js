@@ -37,7 +37,7 @@ var editor_map = ace.edit("editor_map");
 editor_map.setTheme("ace/theme/monokai");
 editor_map.getSession().setMode("ace/mode/javascript");
 editor_map.setOptions({
-  fontSize: "4pt",
+  fontSize: "2pt",
   readOnly: true,
   showPrintMargin: false,
   showLineNumbers: false,
@@ -53,6 +53,10 @@ editor.on("change", function() {
 	scanDoc();
 	editor_map.setValue(editor.getValue());
 	editor_map.selection.clearSelection();
+});
+
+editor.getSession().on('changeScrollTop', function(scroll) {
+  editor_map.session.setScrollTop(scroll / (10/2))
 });
 
 var scanDoc = function() {
@@ -71,8 +75,6 @@ var scanDoc = function() {
 	});
 
 	buildButtonTree(allScans);
-
-	console.log(allScans);
 }
 
 var scanForTheLolz = function(editorText) {
