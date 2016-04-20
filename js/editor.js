@@ -29,14 +29,30 @@ var editor = ace.edit("editor");
 editor.setTheme("ace/theme/monokai");
 editor.getSession().setMode("ace/mode/javascript");
 editor.$blockScrolling = Infinity;
-var oldScans = [];
-
 editor.setOptions({
   fontSize: "10pt"
 });
 
+var editor_map = ace.edit("editor_map");
+editor_map.setTheme("ace/theme/monokai");
+editor_map.getSession().setMode("ace/mode/javascript");
+editor_map.setOptions({
+  fontSize: "4pt",
+  readOnly: true,
+  showPrintMargin: false,
+  showLineNumbers: false,
+  showGutter: false,
+  highlightActiveLine: false,
+  highlightSelectedWord: false,
+  cursorStyle: "slim"
+});
+
+var oldScans = [];
+
 editor.on("change", function() {
 	scanDoc();
+	editor_map.setValue(editor.getValue());
+	editor_map.selection.clearSelection();
 });
 
 var scanDoc = function() {

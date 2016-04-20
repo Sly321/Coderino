@@ -1,4 +1,4 @@
-html, body, #editor, .left-sidebar, .right-sidebar {
+html, body, #editor, #editor_map, .left-sidebar, .right-sidebar {
   height: 100%;
 }
 
@@ -31,8 +31,12 @@ html, body, #editor, .left-sidebar, .right-sidebar {
   min-width: 200px;
 }
 
-#editor {
+#editor, #editor_map {
   margin: 0;
+}
+
+#editor_map > .ace_scroller > .ace_content > .ace_cursor-layer > .ace_cursor {
+  opacity: 0;
 }
 
 #tree_view_content > a {
