@@ -23,6 +23,8 @@ html, body, #editor, #editor_map, .left-sidebar, .right-sidebar {
   float: left;
   width: 15%;
   min-width: 200px;
+  overflow: auto;
+  height: 100%;
 }
 
 .right-sidebar {
@@ -46,7 +48,7 @@ html, body, #editor, #editor_map, .left-sidebar, .right-sidebar {
   cursor: pointer;
   border-radius: 4px;
   background-color: lightgray;
-  margin: 0 3px 3px 3px;
+  margin: 3px 3px 0px 3px;
   padding: 2px;
 }
 
