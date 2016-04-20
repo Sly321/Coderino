@@ -68,7 +68,7 @@ editor.getSession().on('changeScrollTop', function(scroll) {
 	percentage = (scroll * 100) / MAXSCROLLTOP;
 	console.log(percentage);
 
-  var OVERLAYTOP = ((EDITORHEIGHT-190) * percentage) / 100;
+  var OVERLAYTOP = ((EDITORHEIGHT - OVERLAYSIZE) * percentage) / 100;
   editor_map.session.setScrollTop((scroll / (10/2)) - OVERLAYTOP);
 
   if(OVERLAYTOP > 0) {
