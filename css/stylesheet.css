@@ -31,6 +31,7 @@ html, body, #editor, #editor_map, .left-sidebar, .right-sidebar {
   float: right;
   width: 15%;
   max-width: 150px;
+  position: relative;
 }
 
 #editor, #editor_map {
@@ -39,6 +40,14 @@ html, body, #editor, #editor_map, .left-sidebar, .right-sidebar {
 
 #editor_map > .ace_scroller > .ace_content > .ace_cursor-layer > .ace_cursor {
   opacity: 0;
+}
+
+#editor_map .ace_scrollbar-v {
+  font-size: 12pt;
+}
+
+#editor_map .ace_scrollbar-h {
+  display: none;
 }
 
 #tree_view_content > a {
@@ -58,6 +67,16 @@ html, body, #editor, #editor_map, .left-sidebar, .right-sidebar {
 
 .class-prototype-btn {
   color: #8370F8;
+}
+
+#scroll_overlay {
+  position: absolute;
+  height: 190px;
+  width: 142px;
+  background-color: #E4EDE4;
+  z-index: 10;
+  opacity: 0.2;
+  top: 0px;
 }
 
 /*

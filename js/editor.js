@@ -36,6 +36,7 @@ editor.setOptions({
 var editor_map = ace.edit("editor_map");
 editor_map.setTheme("ace/theme/monokai");
 editor_map.getSession().setMode("ace/mode/javascript");
+editor_map.$blockScrolling = Infinity;
 editor_map.setOptions({
   fontSize: "2pt",
   readOnly: true,
@@ -44,7 +45,9 @@ editor_map.setOptions({
   showGutter: false,
   highlightActiveLine: false,
   highlightSelectedWord: false,
-  cursorStyle: "slim"
+  cursorStyle: "slim",
+  hScrollBarAlwaysVisible: false,
+  vScrollBarAlwaysVisible: true,
 });
 
 var oldScans = [];
@@ -190,6 +193,9 @@ scanDoc(/(function)\s([\w]*)/g, "function");
 editor_map.setValue(editor.getValue());
 editor_map.selection.clearSelection();
 
+$( window ).resize(function() {
+  $('#scroll_overlay').height($("#editor").height() / 4.825);
+});
 
 
 
