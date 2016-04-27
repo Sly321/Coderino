@@ -232,7 +232,28 @@ $( window ).resize(function() {
 
 
 $("#file").on("change", function() {
-	console.log(this.value);
+
+	var type = this.files[0].type;
+
+	switch (type) {
+		case "application/javascript":
+			editor.getSession().setMode("ace/mode/javascript");
+			editor_map.getSession().setMode("ace/mode/javascript");
+			break;
+		case "text/plain":
+			editor.getSession().setMode("ace/mode/text");
+			editor_map.getSession().setMode("ace/mode/text");
+			break;
+		case "text/html":
+			editor.getSession().setMode("ace/mode/html");
+			editor_map.getSession().setMode("ace/mode/html");
+			break;
+		default:
+			console.log(type + " is not supported yet. Call the Police.");
+  		resetFormElement($(document.getElementById("uploadelement")));
+			return;
+	}
+
 
 	var reader = new FileReader();
 
