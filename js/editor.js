@@ -253,6 +253,7 @@ $("#file").on("change", function() {
 			console.log(type + " is not supported yet. Call the Police.");
   		resetFormElement($(document.getElementById("uploadelement")));
       document.getElementById('uploadelement').style.display='none';
+      entered--;
 			return;
 	}
 
@@ -266,6 +267,7 @@ $("#file").on("change", function() {
       editor.setValue(e.target.result);
       editor.clearSelection();
       document.getElementById('uploadelement').style.display='none';
+      entered--;
     };
   })(this.files[0]);
 
