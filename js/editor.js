@@ -252,6 +252,7 @@ $("#file").on("change", function() {
 		default:
 			console.log(type + " is not supported yet. Call the Police.");
   		resetFormElement($(document.getElementById("uploadelement")));
+      document.getElementById('uploadelement').style.display='none';
 			return;
 	}
 
