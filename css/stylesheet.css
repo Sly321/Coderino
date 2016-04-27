@@ -89,12 +89,26 @@ html, body, #editor, #editor_map, .left-sidebar, .right-sidebar {
   top: 0px;
 }
 
-.box {
+.box {    
     position: absolute;
+    opacity: 0.5;
+    background: white;
     left: 200px;
-    z-index: -10;
+    z-index: 12;
     height: 100%;
     width: 70%;
+}
+
+.box__input {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.box__file {
+    position: relative;
+    height: 100%;
+    width: 100%;
 }
 
 .box__dragndrop,
