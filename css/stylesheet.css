@@ -89,9 +89,10 @@ html, body, #editor, #editor_map, .left-sidebar, .right-sidebar {
   top: 0px;
 }
 
-.box {    
+.box {
+    transition: all 0.5s ease;
     position: absolute;
-    opacity: 0.5;
+    opacity: 0;
     background: white;
     /* left: 200px; */
     z-index: 12;

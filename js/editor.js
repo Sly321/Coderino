@@ -23,6 +23,13 @@ Array.prototype.equals = function (array) {
     return true;
 }
 
+function resetFormElement(e) {
+  e.wrap('<form>').closest('form').get(0).reset();
+  e.unwrap();
+
+  // Prevent form submission
+}
+
 var entered = 0;
 
 // Hide method from for-in loops
@@ -226,6 +233,21 @@ $( window ).resize(function() {
 
 $("#file").on("change", function() {
 	console.log(this.value);
+
+	var reader = new FileReader();
+
+	reader.onload = (function(theFile) {
+		console.log("onload");
+    return function(e) {
+      console.log("return e");
+      editor.setValue(e.target.result);
+      editor.clearSelection();
+      document.getElementById('uploadelement').style.display='none';
+    };
+  })(this.files[0]);
+
+	reader.readAsText(this.files[0]);
+  resetFormElement($(document.getElementById("uploadelement")));
 });
 
 

@@ -12,7 +12,7 @@
     <script src="js/libs/ace/ace.js"></script>
     <script src="js/libs/jquery.js"></script>
   </head>
-  <body ondragenter="entered++;document.getElementById('uploadelement').style.display='block'" ondragleave="entered--;if (!entered) document.getElementById('uploadelement').style.display='none'">
+  <body ondragenter="entered++;document.getElementById('uploadelement').style.display='block';document.getElementById('uploadelement').style.opacity='0.5'" ondragleave="entered--;if (!entered) document.getElementById('uploadelement').style.display='none'">
     <div class="left-sidebar">
       <!--h1>Treeview</h1><hr /!-->
       <div id="tree_view_content"></div>
