@@ -238,14 +238,17 @@ $("#file").on("change", function() {
 
 	switch (type) {
 		case "application/javascript":
+			$(".left-sidebar").css("display", "block");
 			editor.getSession().setMode("ace/mode/javascript");
 			editor_map.getSession().setMode("ace/mode/javascript");
 			break;
 		case "text/plain":
+			$(".left-sidebar").css("display", "none");
 			editor.getSession().setMode("ace/mode/text");
 			editor_map.getSession().setMode("ace/mode/text");
 			break;
 		case "text/html":
+			$(".left-sidebar").css("display", "none");
 			editor.getSession().setMode("ace/mode/html");
 			editor_map.getSession().setMode("ace/mode/html");
 			break;
