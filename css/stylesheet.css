@@ -89,6 +89,21 @@ html, body, #editor, #editor_map, .left-sidebar, .right-sidebar {
   top: 0px;
 }
 
+.box {
+    position: absolute;
+    left: 200px;
+    z-index: -10;
+    height: 100%;
+    width: 70%;
+}
+
+.box__dragndrop,
+.box__uploading,
+.box__success,
+.box__error {
+  display: none;
+}
+
 /*
 * {
   box-sizing: border-box; }
