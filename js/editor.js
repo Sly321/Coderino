@@ -66,19 +66,54 @@ var MAXSCROLLTOP = editor.session.getScreenLength() * 15;
 var OVERLAYSIZE = $("#editor").height() / 5.078947368421052;
 var OVERLAYTOP = 0;
 var EDITORHEIGHT = $("#editor").height();
+var editorMapScrollCommand = false;
+var editorScrollCommand = false;
 
 editor.on("change", function() {
 	scanDoc();
 	editor_map.setValue(editor.getValue());
 	editor_map.selection.clearSelection();
   MAXSCROLLTOP = editor.session.getScreenLength() * 15;
+  MAXSCROLLTOPMAP = editor_map.session.getScreenLength() * 4;
 });
 
 editor.getSession().on('changeScrollTop', function(scroll) {
+	if (editorMapScrollCommand) {
+		editorMapScrollCommand = false;
+		return;
+	} else {
+		editorScrollCommand = true;
+	}
+
 	percentage = (scroll * 100) / MAXSCROLLTOP;
+	console.log(percentage);
 
   var OVERLAYTOP = ((EDITORHEIGHT - OVERLAYSIZE) * percentage) / 100;
   editor_map.session.setScrollTop((scroll / (10/2)) - OVERLAYTOP);
+
+  if(OVERLAYTOP > 0) {
+  	$("#scroll_overlay").css("top", OVERLAYTOP + "px")
+  } else {
+  	$("#scroll_overlay").css("top", "0px")
+  }
+});
+
+editor_map.getSession().on('changeScrollTop', function(scroll) {
+	if (editorScrollCommand) {
+		editorScrollCommand = false;
+		return;
+	} else {
+		editorMapScrollCommand = true;
+	}
+
+	console.log("editormap scroll");
+	percentage = (editor.session.getScrollTop() * 100) / MAXSCROLLTOP;
+	console.log(percentage);
+
+  var OVERLAYTOP = ((EDITORHEIGHT - OVERLAYSIZE) * percentage) / 100;
+	editor.session.setScrollTop(scroll * 5.321087065928536);
+	console.log("Editor: " + editor.session.getScrollTop());
+	console.log("Map: " + editor_map.session.getScrollTop());
 
   if(OVERLAYTOP > 0) {
   	$("#scroll_overlay").css("top", OVERLAYTOP + "px")
@@ -278,11 +313,19 @@ $("#file").on("change", function() {
   resetFormElement($(document.getElementById("uploadelement")));
 });
 
-var boxTransitionIn = function() {
-	$(document.getElementById("uploadelement")).css("top", "40px");
-	$(document.getElementById("uploadelement")).css("bottom", "40px");
-	$(document.getElementById("uploadelement")).css("left", "40px");
-	$(document.getElementById("uploadelement")).css("right", "40px");
+var boxTransitionIn = function(event) {
+	if (event.dataTransfer.types) {
+      for (var i = 0; i < event.dataTransfer.types.length; i++) {
+          if (event.dataTransfer.types[i] == "Files") {
+					  entered++;
+					  document.getElementById('uploadelement').style.display='block'; 
+						$(document.getElementById("uploadelement")).css("top", "40px");
+						$(document.getElementById("uploadelement")).css("bottom", "40px");
+						$(document.getElementById("uploadelement")).css("left", "40px");
+						$(document.getElementById("uploadelement")).css("right", "40px");
+          }
+      }
+  }
 }
 
 var boxTransitionOut = function() {
