@@ -22,6 +22,9 @@ Array.prototype.equals = function (array) {
     console.log("no changes");      
     return true;
 }
+
+var entered = 0;
+
 // Hide method from for-in loops
 Object.defineProperty(Array.prototype, "equals", {enumerable: false});
 
@@ -221,6 +224,9 @@ $( window ).resize(function() {
 });
 
 
+$("#file").on("change", function() {
+	console.log(this.value);
+});
 
 
 

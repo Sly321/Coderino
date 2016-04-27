@@ -93,22 +93,34 @@ html, body, #editor, #editor_map, .left-sidebar, .right-sidebar {
     position: absolute;
     opacity: 0.5;
     background: white;
-    left: 200px;
+    /* left: 200px; */
     z-index: 12;
-    height: 100%;
-    width: 70%;
+    /* height: 100%; */
+    /* width: 70%; */
+    border-radius: 140px;
+    bottom: 10px;
+    top: 10px;
+    left: 210px;
+    right: 165px;
+    display: none;
 }
 
-.box__input {
-    position: relative;
-    height: 100%;
-    width: 100%;
+.box > div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.box > div > span {
+  font-size: 40px;
+  color: cornflowerblue;
 }
 
 .box__file {
     position: relative;
     height: 100%;
     width: 100%;
+    opacity: 0;
 }
 
 .box__dragndrop,

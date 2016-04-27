@@ -12,7 +12,7 @@
     <script src="js/libs/ace/ace.js"></script>
     <script src="js/libs/jquery.js"></script>
   </head>
-  <body>
+  <body ondragenter="entered++;document.getElementById('uploadelement').style.display='block'" ondragleave="entered--;if (!entered) document.getElementById('uploadelement').style.display='none'">
     <div class="left-sidebar">
       <!--h1>Treeview</h1><hr /!-->
       <div id="tree_view_content"></div>
@@ -21,15 +21,11 @@
       <div id="scroll_overlay"></div>
       <pre id="editor_map">
     </div>
-    <form class="box" method="post" action="" enctype="multipart/form-data">
-      <div class="box__input">
+    <form id="uploadelement" class="box" method="post" action="" enctype="multipart/form-data">
         <input class="box__file" type="file" name="files[]" id="file" data-multiple-caption="{count} files selected" multiple />
-        <label for="file"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
-        <button class="box__button" type="submit">Upload</button>
-      </div>
-      <div class="box__uploading">Uploading&hellip;</div>
-      <div class="box__success">Done!</div>
-      <div class="box__error">Error! <span></span>.</div>
+        <div>
+          <span>Drop your file here!</span>
+        </div>
     </form>
     <pre id="editor">/*!
  * jQuery JavaScript Library v1.12.3
