@@ -228,6 +228,7 @@ $( window ).resize(function() {
 	EDITORHEIGHT = $("#editor").height();
 	OVERLAYSIZE = EDITORHEIGHT / 5.078947368421052;
   $('#scroll_overlay').height(OVERLAYSIZE);
+  $(document.getElementById("uploadelement"))
 });
 
 
@@ -271,7 +272,19 @@ $("#file").on("change", function() {
   resetFormElement($(document.getElementById("uploadelement")));
 });
 
+var boxTransitionIn = function() {
+	$(document.getElementById("uploadelement")).css("top", "40px");
+	$(document.getElementById("uploadelement")).css("bottom", "40px");
+	$(document.getElementById("uploadelement")).css("left", "40px");
+	$(document.getElementById("uploadelement")).css("right", "40px");
+}
 
+var boxTransitionOut = function() {
+	$(document.getElementById("uploadelement")).css("top", "10px");
+	$(document.getElementById("uploadelement")).css("bottom", "10px");
+	$(document.getElementById("uploadelement")).css("left", "10px");
+	$(document.getElementById("uploadelement")).css("right", "10px");
+}
 
 
 // LIB
